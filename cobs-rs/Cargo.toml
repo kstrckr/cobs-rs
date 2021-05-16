@@ -1,0 +1,13 @@
+[package]
+name = "cobs-rs"
+version = "0.1.0"
+authors = ["Kurt Strecker <ksphotopro@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# https://crates.io/crates/postcard
+postcard = "0.6.1"
+# https://docs.rs/serialport/4.0.0/serialport/
+serialport = "4.0.1"
