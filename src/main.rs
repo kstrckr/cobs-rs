@@ -17,8 +17,8 @@ use std::{io, thread};
 
 fn main() {
     // Open the first serialport available.
-    let port_name = &serialport::available_ports().expect("No serial port")[0].port_name;
-    let mut port = serialport::new(port_name, 9600)
+    // let port_name = &serialport::available_ports().expect("No serial port")[0].port_name;
+    let mut port = serialport::new("COM5", 9600)
         .open()
         .expect("Failed to open serial port");
 
@@ -30,6 +30,7 @@ fn main() {
         clone
             .write_all(&[5, 6, 7, 8])
             .expect("Failed to write to serial port");
+        println!("Thread Spawned");
         thread::sleep(Duration::from_millis(1000));
     });
 
@@ -38,12 +39,13 @@ fn main() {
     loop {
         match port.read(&mut buffer) {
             Ok(bytes) => {
+                println!("{}", bytes);
                 if bytes == 1 {
                     println!("Received: {:?}", buffer);
                 }
             }
             Err(ref e) if e.kind() == io::ErrorKind::TimedOut => (),
-            Err(e) => eprintln!("{:?}", e),
+            Err(e) => println!("{:?}", e),
         }
     }
 }
